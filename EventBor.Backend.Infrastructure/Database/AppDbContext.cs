@@ -1,0 +1,16 @@
+﻿using EventBor.Backend.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
+
+namespace EventBor.Backend.Infrastructure.Database;
+
+public class AppDbContext : DbContext
+{
+    public AppDbContext(DbContextOptions<AppDbContext> options)
+        : base(options)
+    {
+    }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+    }
+}
