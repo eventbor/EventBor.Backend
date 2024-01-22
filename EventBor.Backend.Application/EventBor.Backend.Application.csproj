@@ -10,4 +10,8 @@
     <ProjectReference Include="..\EventBor.Backend.Infrastructure\EventBor.Backend.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\" />
+  </ItemGroup>
+
 </Project>
