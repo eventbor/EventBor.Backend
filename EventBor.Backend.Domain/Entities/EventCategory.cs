@@ -1,6 +1,8 @@
-﻿namespace EventBor.Backend.Domain.Entities;
+﻿using EventBor.Backend.Domain.Entities.Commons;
 
-public class EventCategory
+namespace EventBor.Backend.Domain.Entities;
+
+public class EventCategory : Auditable
 {
     public long EventId { get; set; }
     public Event Event { get; set; }

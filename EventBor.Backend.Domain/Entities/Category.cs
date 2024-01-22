@@ -1,7 +1,8 @@
-﻿namespace EventBor.Backend.Domain.Entities;
+﻿using EventBor.Backend.Domain.Entities.Commons;
 
-public class Category
+namespace EventBor.Backend.Domain.Entities;
+
+public class Category : Auditable
 {
-    public long Id { get; set; }
     public string Name { get; set; }
 }
