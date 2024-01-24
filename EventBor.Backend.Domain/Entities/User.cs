@@ -1,4 +1,6 @@
-﻿namespace EventBor.Backend.Domain.Entities;
+﻿using System.Text.Json.Serialization;
+
+namespace EventBor.Backend.Domain.Entities;
 
 public class User
 {
@@ -10,4 +12,7 @@ public class User
     public string PhoneNumber { get; set; }
     public bool IsVerified { get; set; }
     public bool IsActive { get; set; }
+
+    [JsonIgnore]
+    public UserTelegramInfo UserTelegramInfo { get; set; }
 }

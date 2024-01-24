@@ -1,4 +1,5 @@
 using EventBor.Backend.Infrastructure;
+using EventBor.Backend.Application;
 
 namespace EventBor.Backend.API;
 
@@ -11,7 +12,10 @@ public class Program
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
-        builder.Services.AddInfrastructure(builder.Configuration);
+
+        builder.Services
+            .AddApplication()
+            .AddInfrastructure(builder.Configuration);
 
         var app = builder.Build();
 
