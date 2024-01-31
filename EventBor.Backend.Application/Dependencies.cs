@@ -9,6 +9,7 @@ public static class Dependencies
         this IServiceCollection services)
     {
         services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IEventService, EventService>();
         return services;
     }
 }

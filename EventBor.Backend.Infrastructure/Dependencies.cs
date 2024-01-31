@@ -19,6 +19,7 @@ public static class Dependencies
 
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IEventRepository, EventRepository>();
         return services;
     }
 }
