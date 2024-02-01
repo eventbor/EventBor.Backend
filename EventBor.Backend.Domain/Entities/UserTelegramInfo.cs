@@ -1,6 +1,8 @@
-﻿namespace EventBor.Backend.Domain.Entities;
+﻿using EventBor.Backend.Domain.Entities.Commons;
 
-public class UserTelegramInfo
+namespace EventBor.Backend.Domain.Entities;
+
+public class UserTelegramInfo : Auditable
 {
     public long UserId { get; set; }
     public long TelegramId { get; set; }
