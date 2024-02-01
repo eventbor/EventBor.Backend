@@ -1,10 +1,15 @@
+<<<<<<< HEAD
 ﻿using System.Text.Json.Serialization;
 
 namespace EventBor.Backend.Domain.Entities;
+=======
+﻿using EventBor.Backend.Domain.Entities.Commons;
+>>>>>>> f0aaf8b (Auditable class added(base entity))
 
-public class User
+namespace EventBor.Backend.Domain.Entities;
+
+public class User : Auditable
 {
-    public long Id { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string UserName { get; set; }
