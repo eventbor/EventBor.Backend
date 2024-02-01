@@ -1,6 +1,7 @@
 using EventBor.Backend.Infrastructure;
 using EventBor.Backend.Application;
 using EventBor.Backend.TelegramBot;
+using EventBor.Backend.Application.Mappers;
 
 namespace EventBor.Backend.API;
 
@@ -16,7 +17,7 @@ public class Program
 
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
-
+        builder.Services.AddAutoMapper(typeof(MapperProfile));
         builder.Services
             .AddTelegramBot(builder.Configuration)
             .AddApplication()

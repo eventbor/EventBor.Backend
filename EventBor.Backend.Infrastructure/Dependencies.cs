@@ -1,5 +1,6 @@
 ﻿using EventBor.Backend.Infrastructure.Database;
 using EventBor.Backend.Infrastructure.Database.Repositories;
+using EventBor.Backend.Infrastructure.Database.Repositories.Categories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +20,7 @@ public static class Dependencies
 
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<ICategoryRepository, CategoryRepository>();
         return services;
     }
 }
