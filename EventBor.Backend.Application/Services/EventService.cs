@@ -1,38 +1,84 @@
-﻿using EventBor.Backend.Application.DTOs.Events;
+﻿using AutoMapper;
+using EventBor.Backend.Application.DTOs.Events;
+using EventBor.Backend.Domain.Entities;
 using EventBor.Backend.Infrastructure.Database.Repositories;
+using Microsoft.EntityFrameworkCore;
+using Npgsql.TypeMapping;
+using System.Diagnostics.Tracing;
 
 namespace EventBor.Backend.Application.Services;
 
 public class EventService : IEventService
 {
+    private readonly IMapper _mapper;
     private readonly IEventRepository _eventRepository;
 
-    public EventService(IEventRepository eventRepository)
+    public EventService(IMapper mapper, IEventRepository eventRepository)
     {
+        _mapper = mapper;
         _eventRepository = eventRepository;
     }
-    public Task<EventForResultDto> AddAsync(EventForCreationDto dto)
+    public async Task<EventForResultDto> AddAsync(EventForCreationDto dto)
     {
-        throw new NotImplementedException();
+        var eventData = await _eventRepository
+            .SelectAll()
+            .Where(e => e.Title.ToLower() == dto.Title.ToLower())
+            .FirstOrDefaultAsync();
+
+        if(eventData is not null)
+            throw new Exception("Event is already exist");
+
+        var mappedEventData = _mapper.Map<Event>(dto);
+
+        return _mapper.Map<EventForResultDto>(await _eventRepository.InsertAsync(mappedEventData));
     }
 
-    public Task<EventForResultDto> ModifyAsync(long id, EventForUpdateDto dto)
+    public async Task<EventForResultDto> ModifyAsync(long id, EventForUpdateDto dto)
     {
-        throw new NotImplementedException();
+        var eventData = await _eventRepository
+            .SelectAll()
+            .Where(e => e.Id == id)
+            .FirstOrDefaultAsync();
+
+        if(eventData is null)
+            throw new Exception("Event not found");
+
+        var mappedEventData = _mapper.Map(dto, eventData);
+        return _mapper.Map<EventForResultDto>(_eventRepository.UpdateAsync(mappedEventData));
     }
 
-    public Task<bool> RemoveAsync(long id)
+    public async Task<bool> RemoveAsync(long id)
     {
-        throw new NotImplementedException();
+        var eventData = await _eventRepository
+            .SelectAll()
+            .Where(e => e.Id == id)
+            .FirstOrDefaultAsync();
+        if (eventData is null)
+            throw new Exception("Event not found");
+
+        _eventRepository.DeleteAsync(eventData);
+
+        return true;
     }
 
-    public Task<IEnumerable<EventForResultDto>> RetrieveAllAsync()
+    public async Task<IEnumerable<EventForResultDto>> RetrieveAllAsync()
     {
-        throw new NotImplementedException();
+        var allEventData = await _eventRepository
+            .SelectAll()
+            .AsNoTracking()
+            .FirstOrDefaultAsync();
+
+        return _mapper.Map<IEnumerable<EventForResultDto>>(allEventData);
     }
 
-    public Task<EventForResultDto> RetrieveByIdAsync(long id)
+    public async Task<EventForResultDto> RetrieveByIdAsync(long id)
     {
-        throw new NotImplementedException();
+        var eventData = await _eventRepository
+            .SelectAll()
+            .Where(e => e.Id == id)
+            .AsNoTracking()
+            .FirstOrDefaultAsync();
+
+        return _mapper.Map<EventForResultDto>(eventData);
     }
 }
