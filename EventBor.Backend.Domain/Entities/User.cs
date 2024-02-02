@@ -1,12 +1,8 @@
-<<<<<<< HEAD
-﻿using System.Text.Json.Serialization;
+using EventBor.Backend.Domain.Entities.Commons;
+using System.Text.Json.Serialization;
 
 namespace EventBor.Backend.Domain.Entities;
-=======
-﻿using EventBor.Backend.Domain.Entities.Commons;
->>>>>>> f0aaf8b (Auditable class added(base entity))
 
-namespace EventBor.Backend.Domain.Entities;
 
 public class User : Auditable
 {
