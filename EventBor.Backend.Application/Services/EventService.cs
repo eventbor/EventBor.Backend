@@ -1,10 +1,9 @@
 ﻿using AutoMapper;
-using EventBor.Backend.Application.DTOs.Events;
-using EventBor.Backend.Domain.Entities;
-using EventBor.Backend.Infrastructure.Database.Repositories;
 using Microsoft.EntityFrameworkCore;
-using Npgsql.TypeMapping;
-using System.Diagnostics.Tracing;
+using EventBor.Backend.Domain.Entities;
+using EventBor.Backend.Application.DTOs.Events;
+using EventBor.Backend.Application.Commons.Exceptions;
+using EventBor.Backend.Infrastructure.Database.Repositories;
 
 namespace EventBor.Backend.Application.Services;
 
@@ -26,7 +25,7 @@ public class EventService : IEventService
             .FirstOrDefaultAsync();
 
         if(eventData is not null)
-            throw new Exception("Event is already exist");
+            throw new CustomException(409,"Event is already exist");
 
         var mappedEventData = _mapper.Map<Event>(dto);
 
@@ -41,7 +40,7 @@ public class EventService : IEventService
             .FirstOrDefaultAsync();
 
         if(eventData is null)
-            throw new Exception("Event not found");
+            throw new CustomException(404,"Event not found");
 
         var mappedEventData = _mapper.Map(dto, eventData);
         return _mapper.Map<EventForResultDto>(_eventRepository.UpdateAsync(mappedEventData));
@@ -54,9 +53,9 @@ public class EventService : IEventService
             .Where(e => e.Id == id)
             .FirstOrDefaultAsync();
         if (eventData is null)
-            throw new Exception("Event not found");
+            throw new CustomException(404,"Event not found");
 
-        _eventRepository.DeleteAsync(eventData);
+        await _eventRepository.DeleteAsync(eventData);
 
         return true;
     }
@@ -78,6 +77,9 @@ public class EventService : IEventService
             .Where(e => e.Id == id)
             .AsNoTracking()
             .FirstOrDefaultAsync();
+
+        if (eventData is null)
+            throw new CustomException(404, "Event is not found");
 
         return _mapper.Map<EventForResultDto>(eventData);
     }

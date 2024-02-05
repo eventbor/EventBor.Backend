@@ -1,8 +1,9 @@
-﻿using EventBor.Backend.Infrastructure.Database;
-using EventBor.Backend.Infrastructure.Database.Repositories;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using EventBor.Backend.Infrastructure.Database;
 using Microsoft.Extensions.DependencyInjection;
+using EventBor.Backend.Infrastructure.Database.Repositories;
+using EventBor.Backend.Infrastructure.Database.Repositories.Categories;
 
 namespace EventBor.Backend.Infrastructure;
 
@@ -18,8 +19,11 @@ public static class Dependencies
                     configuration.GetConnectionString("DefaultConnectionString")));
 
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IEventRepository, EventRepository>();
+        services.AddScoped<ICategoryRepository, CategoryRepository>();
+
         return services;
     }
 }

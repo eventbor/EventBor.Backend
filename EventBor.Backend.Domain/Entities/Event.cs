@@ -1,10 +1,10 @@
-﻿using EventBor.Backend.Domain.Enums;
+﻿using EventBor.Backend.Domain.Entities.Commons;
+using EventBor.Backend.Domain.Enums;
 
 namespace EventBor.Backend.Domain.Entities;
 
-public class Event
+public class Event : Auditable
 {
-    public long Id { get; set; }
     public string Title { get; set; }
     public DateTime StartedAt { get; set; }
     public string Duration { get; set; }

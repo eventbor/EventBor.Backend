@@ -1,10 +1,10 @@
 ﻿using System.Text.Json.Serialization;
+using EventBor.Backend.Domain.Entities.Commons;
 
 namespace EventBor.Backend.Domain.Entities;
 
-public class User
+public class User : Auditable
 {
-    public long Id { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string UserName { get; set; }
