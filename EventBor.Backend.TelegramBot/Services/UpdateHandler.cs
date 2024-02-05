@@ -92,14 +92,7 @@ public class UpdateHandler
     {
         var buttons = new List<InlineKeyboardButton>()
         {
-            new InlineKeyboardButton("⏪")
-            {
-                CallbackData = $"prev 1"
-            },
-            new InlineKeyboardButton("⏩")
-            {
-                CallbackData = $"prev 2"
-            }
+            InlineKeyboardButton.WithWebApp(text: "Menyu", new WebAppInfo{Url = "https://docs.dot-net.uz/"}),
         };
 
         await this._telegramBotClient.SendTextMessageAsync(
@@ -135,6 +128,6 @@ public class UpdateHandler
         await this._telegramBotClient.SendTextMessageAsync(
                 chatId: message.From.Id,
                 text: "Mavjud bo'lmagan komanda kiritildi. " +
-                "Tekshirib ko'ring.");
+                "Tekshirib ko'ring.")
     }
 }
